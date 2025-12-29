@@ -1,0 +1,56 @@
+@import "./styles/design-system.css";
+
+/* Additional Tailwind-style utilities if needed */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Override Tailwind defaults with our design system */
+@layer base {
+  body {
+    @apply bg-[#f5f3ef] text-[#0a0a0a];
+    font-family: "Libre Baskerville", Georgia, serif;
+  }
+}
+
+/* App-level overrides */
+.app {
+  min-height: 100vh;
+  background-color: var(--color-paper);
+}
+
+/* Ensure smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 3px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+/* Remove default button styles */
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Ensure images don't overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.swipe-card__image--blur {
+  filter: blur(4px);
+  transition: filter 0.3s ease;
+}

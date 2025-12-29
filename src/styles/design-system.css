@@ -1,0 +1,949 @@
+/* ==========================================================================
+   WATCH FINDER - EDITORIAL BRUTALIST DESIGN SYSTEM
+   Inspired by print design, modern brutalism, and magazine aesthetics
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   IMPORTS - Typography
+   Using Bebas Neue for headlines, Libre Baskerville for body
+   -------------------------------------------------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap");
+
+/* --------------------------------------------------------------------------
+   CSS CUSTOM PROPERTIES
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colors - Stark, high contrast */
+  --color-ink: #0a0a0a;
+  --color-paper: #f5f3ef;
+  --color-paper-warm: #ebe7e0;
+  --color-accent-warm: #c45c3e;
+  --color-accent-cool: #2d4a5e;
+  --color-muted: #494643;
+  --color-divider: #d4d0c8;
+
+  /* Typography Scale - Generous, editorial */
+  --font-display: "Bebas Neue", "Arial Black", sans-serif;
+  --font-body: "Libre Baskerville", "Georgia", serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --text-xs: clamp(0.65rem, 1.5vw, 0.75rem);
+  --text-sm: clamp(0.8rem, 2vw, 0.875rem);
+  --text-base: clamp(0.95rem, 2.5vw, 1.0625rem);
+  --text-lg: clamp(1.125rem, 3vw, 1.25rem);
+  --text-xl: clamp(1.5rem, 4vw, 2rem);
+  --text-2xl: clamp(2rem, 6vw, 3rem);
+  --text-3xl: clamp(2.5rem, 8vw, 4.5rem);
+  --text-hero: clamp(3.5rem, 12vw, 8rem);
+
+  /* Spacing - Rhythmic, intentional */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* Borders - Bold, visible */
+  --border-thin: 1px solid var(--color-ink);
+  --border-medium: 2px solid var(--color-ink);
+  --border-thick: 3px solid var(--color-ink);
+  --border-heavy: 4px solid var(--color-ink);
+
+  /* Grid */
+  --grid-gap: var(--space-md);
+  --container-max: 1200px;
+  --container-padding: var(--space-lg);
+
+  /* Transitions - Minimal, snappy */
+  --transition-fast: 120ms ease-out;
+  --transition-base: 200ms ease-out;
+}
+
+/* --------------------------------------------------------------------------
+   RESET & BASE
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--color-ink);
+  background-color: var(--color-paper);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.heading-hero {
+  font-size: var(--text-hero);
+  letter-spacing: -0.01em;
+}
+
+.heading-1 {
+  font-size: var(--text-3xl);
+}
+
+.heading-2 {
+  font-size: var(--text-2xl);
+}
+
+.heading-3 {
+  font-size: var(--text-xl);
+}
+
+.heading-4 {
+  font-size: var(--text-lg);
+}
+
+.body-text {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.7;
+}
+
+.body-text--small {
+  font-size: var(--text-sm);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-muted);
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   LAYOUT
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+.grid {
+  display: grid;
+  gap: var(--grid-gap);
+}
+
+.grid--2cols {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3cols {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 768px) {
+  .grid--2cols,
+  .grid--3cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.stack--sm {
+  gap: var(--space-sm);
+}
+.stack--md {
+  gap: var(--space-md);
+}
+.stack--lg {
+  gap: var(--space-lg);
+}
+.stack--xl {
+  gap: var(--space-xl);
+}
+
+/* --------------------------------------------------------------------------
+   FRAMES & CARDS - Editorial boxes with bold borders
+   -------------------------------------------------------------------------- */
+.frame {
+  border: var(--border-thick);
+  background: var(--color-paper);
+  position: relative;
+}
+
+.frame--heavy {
+  border: var(--border-heavy);
+}
+
+.frame--warm {
+  background: var(--color-paper-warm);
+}
+
+.frame__header {
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: var(--border-medium);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.frame__body {
+  padding: var(--space-lg);
+}
+
+.frame__footer {
+  padding: var(--space-md) var(--space-lg);
+  border-top: var(--border-thin);
+}
+
+/* Card variant */
+.card {
+  border: var(--border-thick);
+  background: var(--color-paper);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--transition-fast);
+}
+
+.card:hover {
+  transform: translate(-2px, -2px);
+}
+
+.card__image {
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  border-bottom: var(--border-medium);
+  display: block;
+}
+
+.card__content {
+  padding: var(--space-md);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.card__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  display: flex;
+  gap: var(--space-md);
+}
+
+.card__description {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   BUTTONS - Rectangular, bold, no rounded corners
+   -------------------------------------------------------------------------- */
+.btn {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-md) var(--space-xl);
+  border: var(--border-thick);
+  background: transparent;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  position: relative;
+}
+
+.btn:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.btn--filled {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.btn--filled:hover {
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.btn--accent {
+  border-color: var(--color-accent-warm);
+  color: var(--color-accent-warm);
+}
+
+.btn--accent:hover {
+  background: var(--color-accent-warm);
+  color: var(--color-paper);
+}
+
+.btn--small {
+  font-size: var(--text-sm);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.btn--large {
+  font-size: var(--text-lg);
+  padding: var(--space-lg) var(--space-2xl);
+  border: var(--border-heavy);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn--icon {
+  padding: var(--space-md);
+  aspect-ratio: 1;
+}
+
+/* --------------------------------------------------------------------------
+   TAGS & LABELS - Small graphic elements
+   -------------------------------------------------------------------------- */
+.tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: var(--space-xs) var(--space-sm);
+  border: var(--border-thin);
+  display: inline-block;
+}
+
+.tag--filled {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-color: var(--color-ink);
+}
+
+.tag--accent {
+  background: var(--color-accent-warm);
+  color: var(--color-paper);
+  border-color: var(--color-accent-warm);
+}
+
+.tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+/* Counter badge */
+.counter {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  min-width: 1.5rem;
+  height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-thin);
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* --------------------------------------------------------------------------
+   DIVIDERS & SEPARATORS
+   -------------------------------------------------------------------------- */
+.divider {
+  height: 2px;
+  background: var(--color-ink);
+  border: none;
+  margin: var(--space-lg) 0;
+}
+
+.divider--thin {
+  height: 1px;
+}
+
+.divider--thick {
+  height: 4px;
+}
+
+.divider--dashed {
+  background: transparent;
+  border-top: 2px dashed var(--color-ink);
+}
+
+/* --------------------------------------------------------------------------
+   SWIPE CARD - The main interaction element
+   -------------------------------------------------------------------------- */
+.swipe-container {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  aspect-ratio: 2/3;
+}
+
+.swipe-card {
+  position: absolute;
+  inset: 0;
+  border: var(--border-heavy);
+  background: var(--color-paper);
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.swipe-card:active {
+  cursor: grabbing;
+}
+
+.swipe-card__image {
+  width: 100%;
+  height: 65%;
+  object-fit: cover;
+  border-bottom: var(--border-thick);
+  pointer-events: none;
+}
+
+.swipe-card__content {
+  padding: var(--space-lg);
+  height: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.swipe-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.swipe-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.swipe-card__year {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border: var(--border-thin);
+  flex-shrink: 0;
+}
+
+.swipe-card__rating {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  color: var(--color-accent-warm);
+}
+
+.swipe-card__genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+/* Swipe indicators */
+.swipe-indicator {
+  position: absolute;
+  top: var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.swipe-indicator--like {
+  right: var(--space-lg);
+  border: var(--border-thick);
+  border-color: #2d5a3d;
+  color: #2d5a3d;
+  transform: rotate(12deg);
+}
+
+.swipe-indicator--nope {
+  left: var(--space-lg);
+  border: var(--border-thick);
+  border-color: var(--color-accent-warm);
+  color: var(--color-accent-warm);
+  transform: rotate(-12deg);
+}
+
+/* --------------------------------------------------------------------------
+   SWIPE ACTIONS
+   -------------------------------------------------------------------------- */
+.swipe-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+}
+
+.swipe-btn {
+  width: 4rem;
+  height: 4rem;
+  border: var(--border-thick);
+  background: var(--color-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.swipe-btn--nope {
+  border-color: var(--color-accent-warm);
+  color: var(--color-accent-warm);
+}
+
+.swipe-btn--nope:hover {
+  background: var(--color-accent-warm);
+  color: var(--color-paper);
+}
+
+.swipe-btn--like {
+  border-color: #2d5a3d;
+  color: #2d5a3d;
+}
+
+.swipe-btn--like:hover {
+  background: #2d5a3d;
+  color: var(--color-paper);
+}
+
+/* --------------------------------------------------------------------------
+   SELECTION GRID - Genre & Media Type selection
+   -------------------------------------------------------------------------- */
+.selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-sm);
+}
+
+.selection-item {
+  border: var(--border-medium);
+  padding: var(--space-md);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  text-transform: uppercase;
+  background: var(--color-paper);
+}
+
+.selection-item:hover {
+  background: var(--color-paper-warm);
+}
+
+.selection-item--selected {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.selection-item--large {
+  padding: var(--space-xl) var(--space-lg);
+  font-size: var(--text-lg);
+  border: var(--border-thick);
+}
+
+/* --------------------------------------------------------------------------
+   HEADER
+   -------------------------------------------------------------------------- */
+.header {
+  border-bottom: var(--border-thick);
+  padding: var(--space-md) 0;
+  background: var(--color-paper);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+.header__nav {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+/* --------------------------------------------------------------------------
+   PROGRESS INDICATOR
+   -------------------------------------------------------------------------- */
+.progress {
+  display: flex;
+  gap: var(--space-xs);
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+.progress__step {
+  width: 2rem;
+  height: 3px;
+  background: var(--color-divider);
+  transition: background var(--transition-base);
+}
+
+.progress__step--active {
+  background: var(--color-ink);
+}
+
+.progress__step--completed {
+  background: var(--color-ink);
+}
+
+/* --------------------------------------------------------------------------
+   RESULTS SCREEN
+   -------------------------------------------------------------------------- */
+.results {
+  padding: var(--space-2xl) 0;
+}
+
+.results__header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-xl);
+  border-bottom: var(--border-thick);
+}
+
+.results__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+}
+
+.results__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.results__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+.results__empty {
+  text-align: center;
+  padding: var(--space-3xl);
+  border: var(--border-thick);
+  border-style: dashed;
+}
+
+/* --------------------------------------------------------------------------
+   LOADING STATE
+   -------------------------------------------------------------------------- */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3xl);
+  gap: var(--space-lg);
+}
+
+.loading__spinner {
+  width: 3rem;
+  height: 3rem;
+  border: var(--border-thick);
+  border-right-color: transparent;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading__text {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* --------------------------------------------------------------------------
+   SCREEN LAYOUT
+   -------------------------------------------------------------------------- */
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen__header {
+  border-bottom: var(--border-thick);
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+.screen__body {
+  flex: 1;
+  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.screen__footer {
+  border-top: var(--border-thick);
+  padding: var(--space-lg);
+}
+
+/* --------------------------------------------------------------------------
+   WELCOME SCREEN
+   -------------------------------------------------------------------------- */
+.welcome {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-xl);
+  position: relative;
+}
+
+.welcome::before {
+  content: "";
+  position: absolute;
+  top: var(--space-lg);
+  left: var(--space-lg);
+  right: var(--space-lg);
+  bottom: var(--space-lg);
+  border: var(--border-thick);
+  pointer-events: none;
+}
+
+.welcome__logo {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  line-height: 0.85;
+  margin-bottom: var(--space-lg);
+}
+
+.welcome__tagline {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--color-muted);
+  /* margin-bottom: var(--space-2xl); */
+  max-width: 400px;
+}
+
+.welcome__cta {
+  margin-top: var(--space-xl);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE ADJUSTMENTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  :root {
+    --container-padding: var(--space-md);
+  }
+
+  .swipe-container {
+    max-width: 100%;
+  }
+
+  .swipe-actions {
+    gap: var(--space-lg);
+  }
+
+  .swipe-btn {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .selection-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .results__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   ANIMATIONS - Minimal, intentional
+   -------------------------------------------------------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+/* Staggered animation delays */
+.stagger-1 {
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+.stagger-2 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+.stagger-3 {
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+.stagger-4 {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+.stagger-5 {
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+
+/* --------------------------------------------------------------------------
+   UTILITY CLASSES
+   -------------------------------------------------------------------------- */
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+.text-accent {
+  color: var(--color-accent-warm);
+}
+
+.mt-sm {
+  margin-top: var(--space-sm);
+}
+.mt-md {
+  margin-top: var(--space-md);
+}
+.mt-lg {
+  margin-top: var(--space-lg);
+}
+.mt-xl {
+  margin-top: var(--space-xl);
+}
+
+.mb-sm {
+  margin-bottom: var(--space-sm);
+}
+.mb-md {
+  margin-bottom: var(--space-md);
+}
+.mb-lg {
+  margin-bottom: var(--space-lg);
+}
+.mb-xl {
+  margin-bottom: var(--space-xl);
+}
+
+.hidden {
+  display: none;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
