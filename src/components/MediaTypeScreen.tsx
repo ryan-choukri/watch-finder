@@ -28,9 +28,8 @@ export default function MediaTypeScreen({
               Choose Your Medium
             </span>
             <h1 className="heading-2">
-              What Are You
-              <br />
-              Looking For?
+              Plutôt 2h, c'est fait <br />
+              Ou Binge watching toute la nuit ? ?
             </h1>
           </div>
 
@@ -44,9 +43,9 @@ export default function MediaTypeScreen({
           >
             <button
               onClick={() => onSelect("movie")}
-              className="flex frame frame--heavy"
+              className="frame frame--heavy"
               style={{
-                padding: "var(--space-2xl) var(--space-lg)",
+                padding: "var(--space-xl) var(--space-lg)",
                 cursor: "pointer",
                 textAlign: "center",
                 transition: "all var(--transition-fast)",
@@ -61,16 +60,30 @@ export default function MediaTypeScreen({
                 e.currentTarget.style.color = "var(--color-ink)";
               }}
             >
-              <Film size={48} strokeWidth={1.5} />
-              <h2 className="pl-3 heading-3 content-center">Movies</h2>
-              <p className="meta text-muted mt-sm">Feature films & cinema</p>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "var(--space-sm)",
+                  marginBottom: "var(--space-sm)",
+                }}
+              >
+                <Film size={32} strokeWidth={1.5} />
+                <h2 className="heading-3" style={{ margin: 0 }}>
+                  Films
+                </h2>
+              </div>
+              <p className="meta text-muted" style={{ margin: 0 }}>
+                Longs métrages & cinéma
+              </p>
             </button>
 
             <button
               onClick={() => onSelect("series")}
-              className="flex frame frame--heavy"
+              className="frame frame--heavy"
               style={{
-                padding: "var(--space-2xl) var(--space-lg)",
+                padding: "var(--space-xl) var(--space-lg)",
                 cursor: "pointer",
                 textAlign: "center",
                 transition: "all var(--transition-fast)",
@@ -85,9 +98,23 @@ export default function MediaTypeScreen({
                 e.currentTarget.style.color = "var(--color-ink)";
               }}
             >
-              <Tv size={48} strokeWidth={1.5} />
-              <h2 className="pl-3 heading-3 content-center">Series</h2>
-              <p className="meta text-muted mt-sm">TV shows & episodic</p>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "var(--space-sm)",
+                  marginBottom: "var(--space-sm)",
+                }}
+              >
+                <Tv size={32} strokeWidth={1.5} />
+                <h2 className="heading-3" style={{ margin: 0 }}>
+                  Séries
+                </h2>
+              </div>
+              <p className="meta text-muted" style={{ margin: 0 }}>
+                Séries TV & épisodiques
+              </p>
             </button>
           </div>
         </div>

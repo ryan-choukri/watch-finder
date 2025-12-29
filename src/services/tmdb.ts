@@ -227,3 +227,73 @@ export async function fetchMedia(
     return fetchTVShows(genres, page);
   }
 }
+
+export async function fetchMediaById(
+  id: number,
+  mediaType: "movie" | "series"
+): Promise<MediaItem | null> {
+  const endpoint = mediaType === "movie" ? "movie" : "tv";
+
+  try {
+    const response = await fetch(
+      `${TMDB_BASE_URL}/${endpoint}/${id}?language=en-US`,
+      {
+        headers: {
+          Authorization: `Bearer ${TMDB_TOKEN}`,
+          accept: "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+
+    if (mediaType === "movie") {
+      return {
+        id: data.id,
+        title: data.title,
+        year: data.release_date ? parseInt(data.release_date.split("-")[0]) : 0,
+        rating: data.vote_average.toFixed(1),
+        poster: data.poster_path ? `${TMDB_IMAGE_BASE}${data.poster_path}` : "",
+        genres:
+          data.genres?.map((g: { name: string }) => g.name).slice(0, 3) || [],
+        description:
+          data.overview?.length > 150
+            ? data.overview.slice(0, 150) + "..."
+            : data.overview || "",
+      };
+    } else {
+      return {
+        id: data.id,
+        title: data.name,
+        year: data.first_air_date
+          ? parseInt(data.first_air_date.split("-")[0])
+          : 0,
+        rating: data.vote_average.toFixed(1),
+        poster: data.poster_path ? `${TMDB_IMAGE_BASE}${data.poster_path}` : "",
+        genres:
+          data.genres?.map((g: { name: string }) => g.name).slice(0, 3) || [],
+        description:
+          data.overview?.length > 150
+            ? data.overview.slice(0, 150) + "..."
+            : data.overview || "",
+      };
+    }
+  } catch (error) {
+    console.error(`Failed to fetch ${mediaType} ${id}:`, error);
+    return null;
+  }
+}
+
+export async function fetchMediaByIds(
+  ids: number[],
+  mediaType: "movie" | "series"
+): Promise<MediaItem[]> {
+  const results = await Promise.all(
+    ids.map((id) => fetchMediaById(id, mediaType))
+  );
+  return results.filter((item): item is MediaItem => item !== null);
+}

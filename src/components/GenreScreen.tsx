@@ -20,6 +20,9 @@ const GENRES = [
   "Crime",
   "Fantasy",
   "Mystery",
+  "Adventure",
+  "Biography",
+  "Family",
 ];
 
 export default function GenreScreen({
@@ -28,7 +31,6 @@ export default function GenreScreen({
   onBack,
 }: GenreScreenProps) {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-
   const toggleGenre = (genre: string) => {
     setSelectedGenres((prev) =>
       prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
@@ -55,13 +57,13 @@ export default function GenreScreen({
 
       <main className="screen__body">
         <div className="container">
-          <div className="text-center mb-xl animate-slide-up">
+          <div className="text-center mb-xs animate-slide-up">
             <span className="label mb-md" style={{ display: "block" }}>
               {mediaType === "movie" ? "Films" : "Series"} Selected
             </span>
-            <h1 className="heading-2">Select Your Genres</h1>
-            <p className="body-text text-muted mt-md">
-              Choose at least one to continue
+            <h1 className="heading-2">Choisie le genre</h1>
+            <p className="body-text text-muted mt-sm mb-md">
+              Entre 1 et 2 genres pour affiner vos résultats
             </p>
           </div>
 
@@ -72,7 +74,20 @@ export default function GenreScreen({
             {GENRES.map((genre, index) => (
               <button
                 key={genre}
-                onClick={() => toggleGenre(genre)}
+                onClick={() => {
+                  //select no more than 3 genres
+                  // remove first key before toggleGenre
+
+                  if (
+                    selectedGenres.length < 2 ||
+                    selectedGenres.includes(genre)
+                  ) {
+                    toggleGenre(genre);
+                  } else {
+                    setSelectedGenres((prev) => prev.slice(1));
+                    toggleGenre(genre);
+                  }
+                }}
                 className={`selection-item ${
                   selectedGenres.includes(genre)
                     ? "selection-item--selected"

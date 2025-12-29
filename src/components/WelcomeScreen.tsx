@@ -12,9 +12,8 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         style={{ alignItems: "center", zIndex: 1 }}
       >
         <div className="animate-slide-up stagger-1">
-          <span className="label">Est. 2024</span>
+          <span className="label">Paris. 2026</span>
         </div>
-
         <h1 className="welcome__logo animate-slide-up stagger-2">
           WA.Itch
           <br />
@@ -22,12 +21,12 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         </h1>
 
         <p className="welcome__tagline animate-slide-up stagger-3">
-          Discover your next favorite film through the art of the swipe
+          Découvrez votre prochain film préféré grâce à l'art du swipe ✨
         </p>
         <p className="welcome__tagline animate-slide-up stagger-3">
-          And AI-powered curation cause resources are unlimited right?
+          Et à la curation alimentée par l'IA, car les ressources sont
+          illimitées, n'est-ce pas ?
         </p>
-
         <div
           className="animate-slide-up stagger-4"
           style={{
@@ -46,7 +45,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             }}
           >
             <Film size={20} />
-            <span className="meta">Movies</span>
+            <span className="meta">Films</span>
           </div>
           <div
             className="frame"
@@ -58,16 +57,14 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
             }}
           >
             <Play size={20} />
-            <span className="meta">Series</span>
+            <span className="meta">Séries</span>
           </div>
         </div>
-
         <div className="welcome__cta animate-slide-up stagger-5">
           <button onClick={onStart} className="btn btn--large btn--filled">
-            Begin Discovery
+            Demarrer l'aventure
           </button>
         </div>
-
         <div
           className="animate-fade-in"
           style={{

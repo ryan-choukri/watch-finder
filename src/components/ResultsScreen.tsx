@@ -1,32 +1,27 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, RotateCcw, ExternalLink } from "lucide-react";
-
-interface Recommendation {
-  id: number;
-  title: string;
-  description: string;
-  year: number;
-  rating: string;
-  poster: string;
-  genres: string[];
-}
+import { ArrowLeft, RotateCcw, ExternalLink, Loader } from "lucide-react";
+import { fetchMediaByIds, type MediaItem } from "../services/tmdb";
 
 interface ResultsScreenProps {
-  mediaType: string;
+  mediaType: "movie" | "series";
   genres: string[];
-  swipeHistory: Array<{ id: number; title: string; action: string }>;
+  swipeHistory: Array<{
+    id: number;
+    title: string;
+    action: "like" | "dislike";
+  }>;
   onRestart: () => void;
 }
 
 export default function ResultsScreen({
   mediaType,
-  genres,
   swipeHistory,
   onRestart,
 }: ResultsScreenProps) {
-  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [recommendations, setRecommendations] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("Analyzing your taste...");
 
   useEffect(() => {
     fetchRecommendations();
@@ -36,35 +31,63 @@ export default function ResultsScreen({
     try {
       setLoading(true);
       setError(false);
+      setStatusMessage("Analyzing your taste...");
 
-      const apiUrl = `${
-        import.meta.env.VITE_SUPABASE_URL
-      }/functions/v1/get-recommendations`;
+      // Call the Supabase Edge Function to get AI recommendations
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          mediaType,
-          genres,
-          swipeHistory,
-        }),
-      });
+      const response = await fetch(
+        `${supabaseUrl}/functions/v1/get-customfilm`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${supabaseKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            mediaType,
+            swipeHistory,
+          }),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch recommendations");
+        throw new Error("Failed to get recommendations from AI");
       }
 
       const data = await response.json();
-      setRecommendations(data.recommendations);
+
+      if (!data.success || !data.recommendedIds?.length) {
+        throw new Error("No recommendations returned");
+      }
+
+      // Log if fallback was used
+      if (data.fallbackUsed) {
+        console.log("Using fallback recommendations");
+        setStatusMessage("Fetching popular titles...");
+      } else {
+        setStatusMessage("Fetching personalized recommendations...");
+      }
+
+      // Fetch full details for each recommended ID from TMDB
+      const mediaDetails = await fetchMediaByIds(
+        data.recommendedIds,
+        mediaType
+      );
+
+      if (mediaDetails.length === 0) {
+        throw new Error("Could not fetch movie details");
+      }
+
+      setRecommendations(mediaDetails);
     } catch (err) {
       console.error("Error fetching recommendations:", err);
       setError(true);
     } finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 30); // Small delay for better UX
     }
   };
 
@@ -74,8 +97,12 @@ export default function ResultsScreen({
     return (
       <div className="screen">
         <div className="loading">
-          <div className="loading__spinner" />
-          <span className="loading__text">Curating your selection...</span>
+          <Loader
+            className="loading__spinner"
+            size={32}
+            style={{ animation: "spin 1s linear infinite" }}
+          />
+          <span className="loading__text">{statusMessage}</span>
         </div>
       </div>
     );
@@ -142,13 +169,12 @@ export default function ResultsScreen({
                 {mediaType === "movie" ? "Films" : "Series"}
               </span>
             </div>
-            <h1 className="results__title">Your Picks</h1>
+            <h1 className="results__title">Votre Selection ! ✨</h1>
             <p className="results__subtitle">
-              Curated selections tailored to your taste
+              Actuelement connecté a l'IA la moins cher, les resultats sont
+              comment ?.
             </p>
           </div>
-
-          <div className="divider divider--thick" />
 
           {recommendations.length > 0 ? (
             <div className="results__grid">
@@ -158,7 +184,6 @@ export default function ResultsScreen({
                   className="card animate-slide-up"
                   style={{
                     animationDelay: `${0.1 + index * 0.1}s`,
-                    opacity: 0,
                   }}
                 >
                   <div style={{ position: "relative" }}>
@@ -182,8 +207,12 @@ export default function ResultsScreen({
                       <h3 className="card__title">{rec.title}</h3>
                       <div className="card__meta">
                         <span>{rec.year}</span>
-                        <span>•</span>
-                        <span>{rec.genres[0]}</span>
+                        {rec.genres[0] && (
+                          <>
+                            <span>•</span>
+                            <span>{rec.genres[0]}</span>
+                          </>
+                        )}
                       </div>
                     </div>
                     <p className="card__description">{rec.description}</p>
@@ -202,12 +231,17 @@ export default function ResultsScreen({
                           </span>
                         ))}
                       </div>
-                      <button
+                      <a
+                        href={`https://www.themoviedb.org/${
+                          mediaType === "movie" ? "movie" : "tv"
+                        }/${rec.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="btn btn--small btn--icon"
-                        aria-label="View details"
+                        aria-label="View on TMDB"
                       >
                         <ExternalLink size={14} />
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </article>
