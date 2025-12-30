@@ -13,15 +13,10 @@ const GENRES = [
   "Drama",
   "Horror",
   "Sci-Fi",
-  "Romance",
   "Thriller",
-  "Documentary",
   "Animation",
-  "Crime",
   "Fantasy",
-  "Mystery",
   "Adventure",
-  "Biography",
   "Family",
 ];
 
@@ -95,12 +90,14 @@ export default function GenreScreen({
                 }`}
                 style={{ animationDelay: `${0.1 + index * 0.05}s` }}
               >
+                {selectedGenres.includes(genre) &&
+                  "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0"}
                 {genre}
                 {selectedGenres.includes(genre) && (
                   <span
-                    className="counter"
+                    className="counter text-xl"
                     style={{
-                      marginLeft: "var(--space-sm)",
+                      marginLeft: "var(--space-xs)",
                       display: "inline-flex",
                     }}
                   >

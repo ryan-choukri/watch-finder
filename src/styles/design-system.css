@@ -576,8 +576,11 @@ h6,
 }
 
 .selection-item {
+  min-height: 59px;
   border: var(--border-medium);
   padding: var(--space-md);
+  padding-right: var(--space-xs);
+  padding-left: var(--space-xs);
   text-align: center;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -589,6 +592,7 @@ h6,
 
 .selection-item:hover {
   background: var(--color-ink);
+  color: var(--color-paper);
 }
 
 .selection-item--selected {
@@ -957,4 +961,26 @@ h6,
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+@keyframes swipe-hint {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  14% {
+    transform: translateX(100px) translateY(-10px) rotate(15deg);
+  }
+  50% {
+    transform: translateX(-112px) translateY(-10px) rotate(-14deg);
+  }
+  75% {
+    transform: translateX(70px) rotate(5deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+.swipe-card--hint {
+  animation: swipe-hint 1.5s ease-in-out;
 }

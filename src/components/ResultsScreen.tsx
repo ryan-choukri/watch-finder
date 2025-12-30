@@ -147,7 +147,7 @@ export default function ResultsScreen({
         <div className="container header__inner">
           <button onClick={onRestart} className="btn btn--small">
             <ArrowLeft size={16} />
-            Start Over
+            Recommencer
           </button>
           <span className="label">Watch Finder</span>
         </div>
@@ -257,7 +257,7 @@ export default function ResultsScreen({
                 Try swiping on more titles to get personalized suggestions.
               </p>
               <button onClick={onRestart} className="btn">
-                Start Over
+                Recommencer
               </button>
             </div>
           )}

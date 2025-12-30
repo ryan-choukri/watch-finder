@@ -221,11 +221,28 @@ export async function fetchMedia(
   genres: string[] = [],
   page: number = 1
 ): Promise<MediaItem[]> {
+  let res = [];
   if (mediaType === "movie") {
-    return fetchMovies(genres, page);
+    res = await fetchMovies(genres, page);
   } else {
-    return fetchTVShows(genres, page);
+    res = await fetchTVShows(genres, page);
   }
+  if (res.length === 0) {
+    const custoGenres = genres.slice(0, 1); // Limit to top 1 genres
+    res =
+      mediaType === "movie"
+        ? await fetchMovies(custoGenres, page)
+        : await fetchTVShows(custoGenres, page);
+  }
+  if (res.length < 5) {
+    const custoGenres = genres.slice(0, 1); // Limit to top 1 genres
+    const mergeRes =
+      mediaType === "movie"
+        ? await fetchMovies(custoGenres, page)
+        : await fetchTVShows(custoGenres, page);
+    res = [...res, ...mergeRes];
+  }
+  return res;
 }
 
 export async function fetchMediaById(

@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from "react";
 import { ArrowLeft, X, Heart, SkipForward, Loader } from "lucide-react";
+import { useState, useCallback, useEffect } from "react";
 import { fetchMedia, type MediaItem } from "../services/tmdb";
 
 interface SwipeScreenProps {
@@ -13,7 +13,7 @@ interface SwipeScreenProps {
 
 const SWIPE_THRESHOLD = 80;
 const ROTATION_FACTOR = 0.15;
-const CARDS_TO_SWIPE = 10; // Number of cards before showing results
+const CARDS_TO_SWIPE = 12; // Number of cards before showing results
 
 export default function SwipeScreen({
   mediaType,
@@ -28,6 +28,7 @@ export default function SwipeScreen({
   const [swipeHistory, setSwipeHistory] = useState<
     Array<{ id: number; title: string; action: "like" | "dislike" }>
   >([]);
+  const [showSwipeHint, setShowSwipeHint] = useState(false);
 
   // Drag state
   const [isDragging, setIsDragging] = useState(false);
@@ -52,6 +53,10 @@ export default function SwipeScreen({
         setError("Failed to load content. Please try again.");
       } finally {
         setIsLoading(false);
+
+        // when loading is complete start an animation exemple movement like right to left to indicate to the user they can swipe
+        setShowSwipeHint(true);
+        setTimeout(() => setShowSwipeHint(false), 900); // hint duration
       }
     };
 
@@ -340,7 +345,9 @@ export default function SwipeScreen({
           {/* Current card - draggable */}
           {currentItem && !exitDirection && (
             <div
-              className="swipe-card"
+              className={`swipe-card ${
+                showSwipeHint ? "swipe-card--hint" : ""
+              }`}
               style={{
                 transform: getCardTransform(),
                 transition: isDragging ? "none" : "transform 0.3s ease-out",
